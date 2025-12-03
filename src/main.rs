@@ -33,7 +33,6 @@ async fn main() {
         if ui.quit_ui.quit_app {
             break 'app;
         }
-
         if draw_state.can_draw {
             draw_state.drawing(world_mpos);
         }
@@ -64,6 +63,7 @@ async fn main() {
         next_frame().await
     }
 }
+
 /*
 fn draw_dashed_rectangle(x: f32, y: f32, w: f32, h: f32, color: Color) {
     let line_len = 10;

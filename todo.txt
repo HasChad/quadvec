@@ -1,2 +1,1 @@
-- add polygon and polygon outline drawing style
 - add smooth brush style
