@@ -47,11 +47,15 @@ pub fn circle_prew(state: &DrawState) {
 
         let path = builder.build();
 
-        let lops = LyonOpsFill::new(&path, state.brush_color);
+        let (geometry, vertices) = if state.is_outline {
+            LyonOpsFill::new(&path, state.brush_color)
+        } else {
+            LyonOpsLine::new(&path, state.brush_color, state.brush_size)
+        };
 
         let mesh = Mesh {
-            vertices: lops.vertices,
-            indices: lops.geometry.indices,
+            vertices: vertices,
+            indices: geometry.indices,
             texture: None,
         };
 
@@ -74,11 +78,15 @@ fn circle_mesh(state: &mut DrawState) {
 
     let path = builder.build();
 
-    let lops = LyonOpsFill::new(&path, state.brush_color);
+    let (geometry, vertices) = if state.is_outline {
+        LyonOpsFill::new(&path, state.brush_color)
+    } else {
+        LyonOpsLine::new(&path, state.brush_color, state.brush_size)
+    };
 
     let mesh = Mesh {
-        vertices: lops.vertices,
-        indices: lops.geometry.indices,
+        vertices: vertices,
+        indices: geometry.indices,
         texture: None,
     };
 

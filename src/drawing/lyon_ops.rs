@@ -5,13 +5,14 @@ use lyon::tessellation::{
 };
 use macroquad::prelude::*;
 
-pub struct LyonOpsLine {
-    pub geometry: VertexBuffers<[f32; 2], u16>,
-    pub vertices: Vec<Vertex>,
-}
+pub struct LyonOpsLine;
 
 impl LyonOpsLine {
-    pub fn new(path: &Path, color: Color, width: f32) -> Self {
+    pub fn new(
+        path: &Path,
+        color: Color,
+        width: f32,
+    ) -> (VertexBuffers<[f32; 2], u16>, Vec<Vertex>) {
         // Tessellate into triangles
         let mut geometry: VertexBuffers<[f32; 2], u16> = VertexBuffers::new();
         let mut tessellator = StrokeTessellator::new();
@@ -41,17 +42,14 @@ impl LyonOpsLine {
             })
             .collect();
 
-        LyonOpsLine { geometry, vertices }
+        (geometry, vertices)
     }
 }
 
-pub struct LyonOpsFill {
-    pub geometry: VertexBuffers<[f32; 2], u16>,
-    pub vertices: Vec<Vertex>,
-}
+pub struct LyonOpsFill;
 
 impl LyonOpsFill {
-    pub fn new(path: &Path, color: Color) -> Self {
+    pub fn new(path: &Path, color: Color) -> (VertexBuffers<[f32; 2], u16>, Vec<Vertex>) {
         // Tessellate into triangles
         let mut geometry: VertexBuffers<[f32; 2], u16> = VertexBuffers::new();
         let mut tessellator = FillTessellator::new();
@@ -78,6 +76,6 @@ impl LyonOpsFill {
             })
             .collect();
 
-        LyonOpsFill { geometry, vertices }
+        (geometry, vertices)
     }
 }

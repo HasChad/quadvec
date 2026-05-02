@@ -68,11 +68,11 @@ pub fn curve_prew(state: &DrawState) {
 
         let path = builder.build();
 
-        let lops = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
+        let (geometry, vertices) = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
 
         let mesh = Mesh {
-            vertices: lops.vertices,
-            indices: lops.geometry.indices,
+            vertices: vertices,
+            indices: geometry.indices,
             texture: None,
         };
 
@@ -100,11 +100,11 @@ fn curve_mesh(state: &mut DrawState) {
 
     let path = builder.build();
 
-    let lops = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
+    let (geometry, vertices) = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
 
     let mesh = Mesh {
-        vertices: lops.vertices,
-        indices: lops.geometry.indices,
+        vertices: vertices,
+        indices: geometry.indices,
         texture: None,
     };
 
