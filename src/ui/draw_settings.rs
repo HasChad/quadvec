@@ -17,10 +17,11 @@ impl DrawSettings {
     }
 
     pub fn ui(&mut self, ctx: &egui::Context, state: &mut DrawState) {
-        egui::Window::new("Settings")
-            .open(&mut true)
+        egui::Window::new("")
             .max_width(100.0)
+            .title_bar(false)
             .resizable(false)
+            .collapsible(false)
             .anchor(Align2::LEFT_TOP, (5.0, 5.0))
             .frame(egui::Frame::window(&egui::Style::default()))
             .show(ctx, |ui| {
@@ -29,16 +30,15 @@ impl DrawSettings {
                     .spacing([5.0, 5.0])
                     .striped(true)
                     .show(ui, |ui| {
-                        ui.label(format!("fps: {:.0}", get_fps()));
-                        ui.end_row();
-
-                        ui.add(
-                            Slider::new(&mut state.brush_size, 1.0..=30.0)
-                                .trailing_fill(true)
-                                .step_by(0.1)
-                                .text("Brush Size")
-                                .text_color(Color32::WHITE),
-                        );
+                        ui.horizontal(|ui| {
+                            ui.label(RichText::new("Brush Size:").color(Color32::WHITE));
+                            ui.add(
+                                Slider::new(&mut state.brush_size, 1.0..=30.0)
+                                    .trailing_fill(true)
+                                    .step_by(0.1)
+                                    .text_color(Color32::WHITE),
+                            )
+                        });
                         ui.end_row();
 
                         let mut egui_color = egui::Color32::WHITE;
@@ -106,6 +106,8 @@ impl DrawSettings {
                             );
                             ui.end_row();
                         }
+
+                        ui.label(format!("fps: {:.0}", get_fps()));
                     })
             });
     }

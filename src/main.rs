@@ -56,57 +56,8 @@ async fn main() {
             WHITE,
         );
 
-        // draw_dashed_rectangle(0.0, 0.0, 100.0, 100.0, WHITE);
-
         egui_macroquad::draw();
 
         next_frame().await
     }
 }
-
-/*
-fn draw_dashed_rectangle(x: f32, y: f32, w: f32, h: f32, color: Color) {
-    let line_len = 10;
-    let thick = 2.0;
-
-    for p in (0..=(w as i32)).step_by(line_len * 2) {
-        draw_line(
-            x + p as f32,
-            y,
-            (p + line_len as i32) as f32,
-            y,
-            thick,
-            color,
-        );
-
-        draw_line(
-            x + p as f32,
-            y + h,
-            (p + line_len as i32) as f32,
-            y + h,
-            thick,
-            color,
-        );
-    }
-
-    for p in (0..=(h as i32)).step_by(line_len * 2) {
-        draw_line(
-            x,
-            y + p as f32,
-            x,
-            (p + line_len as i32) as f32,
-            thick,
-            color,
-        );
-
-        draw_line(
-            x + w,
-            y + p as f32,
-            x + w,
-            (p + line_len as i32) as f32,
-            thick,
-            color,
-        );
-    }
-}
-*/
