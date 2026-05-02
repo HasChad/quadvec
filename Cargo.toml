@@ -1,5 +1,5 @@
 [package]
-name = "epaint"
+name = "quadvec"
 version = "0.1.0"
 edition = "2024"
 
@@ -9,4 +9,4 @@ egui-macroquad = "0.17.3"
 lyon = "1.0.16"
 
 [build-dependencies]
-winres = "0.1.12"
+winresource = "0.1.31"

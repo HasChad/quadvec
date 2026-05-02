@@ -41,7 +41,7 @@ fn set_icon() -> Icon {
 
 pub fn window_conf() -> Conf {
     Conf {
-        window_title: "epaint".into(),
+        window_title: "QuadVec".into(),
         window_width: 800,
         window_height: 600,
         sample_count: 8,
