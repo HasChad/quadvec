@@ -23,8 +23,6 @@ impl StyleSettings {
                     .show(ui, |ui| {
                         ui.radio_value(&mut state.style, DrawStyle::Brush, "Brush");
                         ui.end_row();
-                        ui.radio_value(&mut state.style, DrawStyle::SBrush, "SBrush");
-                        ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Line, "Line");
                         ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Curve, "Curve");
@@ -33,19 +31,20 @@ impl StyleSettings {
                         ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Rect, "Rect");
                         ui.end_row();
-                        ui.radio_value(&mut state.style, DrawStyle::RectO, "Rect O");
-                        ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Circle, "Circle");
-                        ui.end_row();
-                        ui.radio_value(&mut state.style, DrawStyle::CircleO, "Circle O");
                         ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Ellipse, "Ellipse");
                         ui.end_row();
-                        ui.radio_value(&mut state.style, DrawStyle::EllipseO, "Ellipse O");
-                        ui.end_row();
                         ui.radio_value(&mut state.style, DrawStyle::Poly, "Poly");
                         ui.end_row();
-                        ui.radio_value(&mut state.style, DrawStyle::PolyO, "Poly O");
+                        if state.style == DrawStyle::Rect
+                            || state.style == DrawStyle::Circle
+                            || state.style == DrawStyle::Ellipse
+                            || state.style == DrawStyle::Poly
+                        {
+                            ui.end_row();
+                            ui.checkbox(&mut state.is_outline, "Outline");
+                        }
                     })
             });
     }

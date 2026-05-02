@@ -2,7 +2,8 @@
 
 Vector drawing app made with [Macroquad](https://macroquad.rs)
 
-Features:
+
+**Features:**
 - Smooth Brush
 - Rectangle
 - Rectangle Outline

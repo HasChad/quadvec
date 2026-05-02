@@ -84,12 +84,12 @@ impl DrawSettings {
                         });
                         ui.end_row();
 
-                        if state.style == DrawStyle::Poly || state.style == DrawStyle::PolyO {
+                        if state.style == DrawStyle::Poly {
                             ui.heading("- Polygon Settings -");
                             ui.end_row();
 
                             ui.add(
-                                Slider::new(&mut state.poly_settings.sides, 3..=20)
+                                Slider::new(&mut state.draw_settings.sides, 3..=20)
                                     .trailing_fill(true)
                                     .step_by(0.1)
                                     .text("Edge Count")
@@ -98,7 +98,7 @@ impl DrawSettings {
                             ui.end_row();
 
                             ui.add(
-                                Slider::new(&mut state.poly_settings.rotation, 0.0..=360.0)
+                                Slider::new(&mut state.draw_settings.rotation, 0.0..=360.0)
                                     .trailing_fill(true)
                                     .step_by(0.1)
                                     .text("Rotation")

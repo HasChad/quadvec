@@ -46,7 +46,7 @@ async fn main() {
         ui.render_ui(&mut draw_state);
 
         draw_state.line_render();
-        draw_state.current_line_render();
+        draw_state.current_style_preview();
 
         draw_circle_lines(
             world_mpos.x,
