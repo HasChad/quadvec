@@ -33,6 +33,7 @@ async fn main() {
         if ui.quit_ui.quit_app {
             break 'app;
         }
+
         if draw_state.can_draw {
             draw_state.drawing(world_mpos);
         }

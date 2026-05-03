@@ -76,7 +76,7 @@ pub fn arrow_prew(state: &DrawState) {
 
         let path = builder.build();
 
-        let (geometry, vertices) = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
+        let (geometry, vertices) = LyonOpsFill::new(&path, state.brush_color);
 
         let mesh = Mesh {
             vertices: vertices,
@@ -133,7 +133,7 @@ fn arrow_mesh(state: &mut DrawState) {
 
     let path = builder.build();
 
-    let (geometry, vertices) = LyonOpsLine::new(&path, state.brush_color, state.brush_size);
+    let (geometry, vertices) = LyonOpsFill::new(&path, state.brush_color);
 
     let mesh = Mesh {
         vertices: vertices,

@@ -18,7 +18,7 @@ pub mod line_smoothing;
 pub mod lyon_ops;
 pub mod styles;
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum DrawStyle {
     Brush,
     Line,
