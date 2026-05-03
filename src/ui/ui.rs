@@ -1,5 +1,7 @@
+use macroquad::input::{KeyCode, is_key_pressed};
+
 use crate::{
-    drawing::DrawState,
+    drawing::App,
     ui::{draw_settings::DrawSettings, quit_ui::QuitUI},
 };
 
@@ -19,9 +21,13 @@ impl UI {
         }
     }
 
-    pub fn render_ui(self: &mut Self, draw_state: &mut DrawState) {
+    pub fn render_ui(self: &mut Self, draw_state: &mut App) {
         egui_macroquad::ui(|ctx| {
             draw_state.can_draw = !ctx.wants_pointer_input();
+
+            if is_key_pressed(KeyCode::Escape) {
+                self.quit_ui.visible = true;
+            }
 
             self.draw_settings.ui(ctx, draw_state);
             self.quit_ui.ui(ctx);

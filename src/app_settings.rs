@@ -50,43 +50,63 @@ pub fn window_conf() -> Conf {
     }
 }
 
-pub const ZOOM_DEFAULT: f32 = 2.0;
-const ZOOM_VALUE: f32 = 0.2;
+pub struct FreedomCamera2D {
+    pub camera: Camera2D,
+    pub zoom: f32,
+    pub zoom_value: f32,
+}
 
-pub fn camera_fixer(camera: &mut Camera2D, zoomer: &mut f32) {
-    camera.zoom = vec2(*zoomer / screen_width(), *zoomer / screen_height());
-
-    if screen_width() < 320. {
-        request_new_screen_size(320., screen_height());
-    }
-
-    if screen_height() < 240. {
-        request_new_screen_size(screen_width(), 240.);
-    }
-
-    if mouse_wheel().1 > 0. {
-        *zoomer = (*zoomer * 10.).round() / 10.;
-
-        *zoomer += ZOOM_VALUE;
-    } else if mouse_wheel().1 < 0. && *zoomer > ZOOM_VALUE {
-        *zoomer = (*zoomer * 10.).round() / 10.;
-
-        *zoomer -= ZOOM_VALUE;
-
-        if *zoomer < ZOOM_VALUE {
-            *zoomer = ZOOM_VALUE;
+impl FreedomCamera2D {
+    pub fn new() -> Self {
+        Self {
+            camera: Camera2D::default(),
+            zoom: 2.0,
+            zoom_value: 0.2,
         }
     }
 
-    if is_mouse_button_down(MouseButton::Middle) {
-        let mouse_pos = mouse_delta_position();
+    pub fn update(&mut self) {
+        self.camera.zoom = vec2(self.zoom / screen_width(), self.zoom / screen_height());
 
-        camera.target.x += mouse_pos.x * screen_width() / *zoomer;
-        camera.target.y += mouse_pos.y * screen_height() / *zoomer;
+        if screen_width() < 320. {
+            request_new_screen_size(320., screen_height());
+        }
+
+        if screen_height() < 240. {
+            request_new_screen_size(screen_width(), 240.);
+        }
+
+        if mouse_wheel().1 > 0. {
+            self.zoom = (self.zoom * 10.).round() / 10.;
+
+            self.zoom += self.zoom_value;
+        } else if mouse_wheel().1 < 0. && self.zoom > self.zoom_value {
+            self.zoom = (self.zoom * 10.).round() / 10.;
+
+            self.zoom -= self.zoom_value;
+
+            if self.zoom < self.zoom_value {
+                self.zoom = self.zoom_value;
+            }
+        }
+
+        if is_mouse_button_down(MouseButton::Middle) {
+            let mouse_pos = mouse_delta_position();
+
+            self.camera.target.x += mouse_pos.x * screen_width() / self.zoom;
+            self.camera.target.y += mouse_pos.y * screen_height() / self.zoom;
+        }
+
+        if is_key_pressed(KeyCode::Space) {
+            self.camera.target = Vec2::ZERO;
+            self.zoom = 2.0;
+        }
     }
 
-    if is_key_pressed(KeyCode::Space) {
-        camera.target = Vec2::ZERO;
-        *zoomer = ZOOM_DEFAULT;
+    pub fn world_mpos(&self) -> Vec2 {
+        self.camera.screen_to_world(Vec2 {
+            x: mouse_position().0,
+            y: mouse_position().1,
+        })
     }
 }

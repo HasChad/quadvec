@@ -30,7 +30,7 @@ pub enum DrawStyle {
     Poly,
 }
 
-pub struct DrawState {
+pub struct App {
     pub style: DrawStyle,
     pub lines: Vec<Vec<Mesh>>,
     pub redo_save: Vec<Vec<Mesh>>,
@@ -43,9 +43,9 @@ pub struct DrawState {
     pub draw_settings: DrawSettings,
 }
 
-impl DrawState {
+impl App {
     pub fn new() -> Self {
-        DrawState {
+        App {
             style: DrawStyle::Brush,
             lines: vec![],
             redo_save: vec![],

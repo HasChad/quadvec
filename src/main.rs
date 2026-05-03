@@ -6,55 +6,44 @@ mod app_settings;
 mod drawing;
 mod ui;
 
-use crate::{drawing::DrawState, ui::ui::UI};
+use crate::{drawing::App, ui::ui::UI};
 use app_settings::*;
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    let mut camera = Camera2D {
-        zoom: vec2(2. / screen_width(), 2. / screen_height()),
-        ..Default::default()
-    };
-    let mut zoomer = ZOOM_DEFAULT;
-
-    let mut draw_state = DrawState::new();
+    let mut freedom_camera = FreedomCamera2D::new();
+    let mut app = App::new();
     let mut ui = UI::new();
 
     'app: loop {
-        camera_fixer(&mut camera, &mut zoomer);
-        let world_mpos = camera.screen_to_world(Vec2 {
-            x: mouse_position().0,
-            y: mouse_position().1,
-        });
+        freedom_camera.update();
+        let world_mpos = freedom_camera.world_mpos();
 
-        if is_key_pressed(KeyCode::Escape) {
-            ui.quit_ui.visible = true;
-        }
         if ui.quit_ui.quit_app {
             break 'app;
         }
 
-        if draw_state.can_draw {
-            draw_state.drawing(world_mpos);
+        if app.can_draw {
+            app.drawing(world_mpos);
         }
 
-        draw_state.inputs();
+        app.inputs();
 
         // ! draw
-        clear_background(draw_state.bg_color);
-        set_camera(&camera);
+        clear_background(app.bg_color);
+        set_camera(&freedom_camera.camera);
 
-        ui.render_ui(&mut draw_state);
+        ui.render_ui(&mut app);
 
-        draw_state.line_render();
-        draw_state.current_style_preview();
+        app.line_render();
+        app.current_style_preview();
 
         draw_circle_lines(
             world_mpos.x,
             world_mpos.y,
-            draw_state.brush_size / 2.0 - 1.0,
+            app.brush_size / 2.0,
             1.0,
-            WHITE,
+            app.brush_color,
         );
 
         egui_macroquad::draw();

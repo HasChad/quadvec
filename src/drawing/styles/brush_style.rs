@@ -2,9 +2,9 @@ use lyon::math::point;
 use lyon::path::Path;
 use macroquad::prelude::*;
 
-use crate::drawing::{DrawState, line_smoothing::line_smoothing, lyon_ops::*};
+use crate::drawing::{App, line_smoothing::line_smoothing, lyon_ops::*};
 
-pub fn brush_draw(mouse_pos: Vec2, state: &mut DrawState) {
+pub fn brush_draw(mouse_pos: Vec2, state: &mut App) {
     if is_mouse_button_pressed(MouseButton::Left) {
         state.current_line.push(Vec2 {
             x: mouse_pos.x,
@@ -34,7 +34,7 @@ pub fn brush_draw(mouse_pos: Vec2, state: &mut DrawState) {
     }
 }
 
-pub fn brush_prew(state: &DrawState) {
+pub fn brush_prew(state: &App) {
     let mut prev_last: Option<&Vec2> = None;
 
     for line_chunk in state.current_line.chunks(350) {
@@ -77,7 +77,7 @@ pub fn brush_prew(state: &DrawState) {
     }
 }
 
-pub fn brush_mesh(state: &mut DrawState) {
+pub fn brush_mesh(state: &mut App) {
     let mut prev_last: Option<&Vec2> = None;
     state.lines.push(vec![]);
 

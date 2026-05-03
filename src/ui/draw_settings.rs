@@ -1,7 +1,6 @@
 use egui_macroquad::egui::{self, Color32, Pos2, RichText, Slider};
-use macroquad::time::get_fps;
 
-use crate::drawing::{DrawState, DrawStyle};
+use crate::drawing::{App, DrawStyle};
 
 pub struct DrawSettings {
     pub sides: u32,
@@ -16,7 +15,7 @@ impl DrawSettings {
         }
     }
 
-    pub fn ui(&mut self, ctx: &egui::Context, state: &mut DrawState) {
+    pub fn ui(&mut self, ctx: &egui::Context, state: &mut App) {
         egui::Window::new("Toolbar")
             .fixed_pos(Pos2::new(5.0, 5.0))
             .resizable(false)

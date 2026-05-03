@@ -2,9 +2,9 @@ use lyon::path::{Path, Winding};
 use lyon::{geom::Box2D, math::point};
 use macroquad::prelude::*;
 
-use crate::drawing::{DrawState, lyon_ops::*};
+use crate::drawing::{App, lyon_ops::*};
 
-pub fn rect_draw(mouse_pos: Vec2, state: &mut DrawState) {
+pub fn rect_draw(mouse_pos: Vec2, state: &mut App) {
     if is_mouse_button_pressed(MouseButton::Left) {
         state.current_line.push(Vec2 {
             x: mouse_pos.x,
@@ -33,7 +33,7 @@ pub fn rect_draw(mouse_pos: Vec2, state: &mut DrawState) {
     }
 }
 
-pub fn rect_prew(state: &DrawState) {
+pub fn rect_prew(state: &App) {
     if state.current_line.len() == 2 {
         let mut builder = Path::builder();
 
@@ -62,7 +62,7 @@ pub fn rect_prew(state: &DrawState) {
     }
 }
 
-fn rect_mesh(state: &mut DrawState) {
+fn rect_mesh(state: &mut App) {
     state.lines.push(vec![]);
 
     let mut builder = Path::builder();
