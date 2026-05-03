@@ -3,6 +3,16 @@
 version = 4
 
 [[package]]
+name = "QuadVec"
+version = "1.0.0"
+dependencies = [
+ "egui-macroquad",
+ "lyon",
+ "macroquad",
+ "winresource",
+]
+
+[[package]]
 name = "ab_glyph"
 version = "0.2.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -976,16 +986,6 @@ checksum = "1843b2c8bd2cf5c43fa99dc53bc9f977bd032d386c54491ceeee2499c2d5020f"
 dependencies = [
  "sapp-jsutils",
  "webbrowser",
-]
-
-[[package]]
-name = "quadvec"
-version = "0.1.0"
-dependencies = [
- "egui-macroquad",
- "lyon",
- "macroquad",
- "winresource",
 ]
 
 [[package]]

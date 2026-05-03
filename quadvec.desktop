@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=QuadVec
+Comment=Vector Drawing Application
+Exec=QuadVec
+Icon=QuadVec
+Type=Application
+Categories=Graphics;
+Terminal=false

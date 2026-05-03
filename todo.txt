@@ -1,2 +1,0 @@
-- realtime brush smoothing
-- made ui better
