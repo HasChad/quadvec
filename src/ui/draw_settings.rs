@@ -20,6 +20,7 @@ impl DrawSettings {
             .fixed_pos(Pos2::new(5.0, 5.0))
             .resizable(false)
             .movable(false)
+            .frame(egui::Frame::window(&ctx.style()).shadow(egui::Shadow::NONE))
             .show(ctx, |ui| {
                 egui::Grid::new("color_grid")
                     .num_columns(2)
@@ -37,34 +38,30 @@ impl DrawSettings {
                         ui.end_row();
 
                         // Brush Color
-                        let mut egui_color = egui::Color32::WHITE;
-                        egui_color[0] = 255.min((state.brush_color.r * 255.0) as u8);
-                        egui_color[1] = 255.min((state.brush_color.g * 255.0) as u8);
-                        egui_color[2] = 255.min((state.brush_color.b * 255.0) as u8);
-                        egui_color[3] = 255.min((state.brush_color.a * 255.0) as u8);
-
+                        let mut egui_color: [u8; 3] = [
+                            255.min((state.brush_color.r * 255.0) as u8),
+                            255.min((state.brush_color.g * 255.0) as u8),
+                            255.min((state.brush_color.b * 255.0) as u8),
+                        ];
                         ui.label(RichText::new("Brush Color:").color(Color32::WHITE));
-                        if ui.color_edit_button_srgba(&mut egui_color).changed() {
-                            state.brush_color.a = egui_color.a() as f32 / 255.0;
-                            state.brush_color.r = egui_color.r() as f32 / 255.0;
-                            state.brush_color.g = egui_color.g() as f32 / 255.0;
-                            state.brush_color.b = egui_color.b() as f32 / 255.0;
+                        if ui.color_edit_button_srgb(&mut egui_color).changed() {
+                            state.brush_color.r = egui_color[0] as f32 / 255.0;
+                            state.brush_color.g = egui_color[1] as f32 / 255.0;
+                            state.brush_color.b = egui_color[2] as f32 / 255.0;
                         }
                         ui.end_row();
 
                         // Background Color
-                        let mut egui_color = egui::Color32::WHITE;
-                        egui_color[0] = 255.min((state.bg_color.r * 255.0) as u8);
-                        egui_color[1] = 255.min((state.bg_color.g * 255.0) as u8);
-                        egui_color[2] = 255.min((state.bg_color.b * 255.0) as u8);
-                        egui_color[3] = 255.min((state.bg_color.a * 255.0) as u8);
-
+                        let mut egui_color: [u8; 3] = [
+                            255.min((state.bg_color.r * 255.0) as u8),
+                            255.min((state.bg_color.g * 255.0) as u8),
+                            255.min((state.bg_color.b * 255.0) as u8),
+                        ];
                         ui.label(RichText::new("BG Color:").color(Color32::WHITE));
-                        if ui.color_edit_button_srgba(&mut egui_color).changed() {
-                            state.bg_color.a = egui_color.a() as f32 / 255.0;
-                            state.bg_color.r = egui_color.r() as f32 / 255.0;
-                            state.bg_color.g = egui_color.g() as f32 / 255.0;
-                            state.bg_color.b = egui_color.b() as f32 / 255.0;
+                        if ui.color_edit_button_srgb(&mut egui_color).changed() {
+                            state.bg_color.r = egui_color[0] as f32 / 255.0;
+                            state.bg_color.g = egui_color[1] as f32 / 255.0;
+                            state.bg_color.b = egui_color[2] as f32 / 255.0;
                         }
                         ui.end_row();
 

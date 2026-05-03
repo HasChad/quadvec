@@ -2,6 +2,7 @@
 name = "QuadVec"
 version = "1.0.0"
 edition = "2024"
+repository = "https://github.com/HasChad/QuadVec"
 
 [dependencies]
 macroquad = { version = "0.4.14", default-features = false }

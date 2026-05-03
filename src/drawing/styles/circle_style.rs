@@ -4,41 +4,30 @@ use macroquad::prelude::*;
 
 use crate::drawing::{App, lyon_ops::*};
 
-pub fn circle_draw(mouse_pos: Vec2, state: &mut App) {
+pub fn circle_draw(mouse_pos: Vec2, app: &mut App) {
     if is_mouse_button_pressed(MouseButton::Left) {
-        state.current_line.push(Vec2 {
-            x: mouse_pos.x,
-            y: mouse_pos.y,
-        });
-
-        state.current_line.push(Vec2 {
-            x: mouse_pos.x,
-            y: mouse_pos.y,
-        });
+        app.current_line.push(mouse_pos);
     };
 
-    if is_mouse_button_down(MouseButton::Left) && !state.current_line.is_empty() {
-        state.current_line[1] = Vec2 {
-            x: mouse_pos.x,
-            y: mouse_pos.y,
-        };
+    if is_mouse_button_down(MouseButton::Left) && !app.current_line.is_empty() {
+        app.current_line[1] = mouse_pos;
     }
 
     if is_mouse_button_released(MouseButton::Left) {
-        if state.current_line.len() > 1 {
-            circle_mesh(state);
+        if app.current_line.len() > 1 {
+            circle_mesh(app);
         }
 
-        state.current_line.clear();
+        app.current_line.clear();
     }
 }
 
-pub fn circle_prew(state: &App) {
-    if state.current_line.len() == 2 {
+pub fn circle_prew(app: &App) {
+    if app.current_line.len() == 2 {
         let mut builder = Path::builder();
 
-        let p1 = state.current_line[0];
-        let p2 = state.current_line[1];
+        let p1 = app.current_line[0];
+        let p2 = app.current_line[1];
 
         let center = (p1 + p2) * 0.5;
         let radius = p2.distance(p1) * 0.5;
@@ -47,10 +36,10 @@ pub fn circle_prew(state: &App) {
 
         let path = builder.build();
 
-        let (geometry, vertices) = if state.is_outline {
-            LyonOpsFill::new(&path, state.brush_color)
+        let (geometry, vertices) = if app.is_outline {
+            LyonOpsFill::new(&path, app.brush_color)
         } else {
-            LyonOpsLine::new(&path, state.brush_color, state.brush_size)
+            LyonOpsLine::new(&path, app.brush_color, app.brush_size)
         };
 
         let mesh = Mesh {
@@ -63,13 +52,13 @@ pub fn circle_prew(state: &App) {
     }
 }
 
-fn circle_mesh(state: &mut App) {
-    state.lines.push(vec![]);
+fn circle_mesh(app: &mut App) {
+    app.lines.push(vec![]);
 
     let mut builder = Path::builder();
 
-    let p1 = state.current_line[0];
-    let p2 = state.current_line[1];
+    let p1 = app.current_line[0];
+    let p2 = app.current_line[1];
 
     let center = (p1 + p2) * 0.5;
     let radius = p2.distance(p1) * 0.5;
@@ -78,10 +67,10 @@ fn circle_mesh(state: &mut App) {
 
     let path = builder.build();
 
-    let (geometry, vertices) = if state.is_outline {
-        LyonOpsFill::new(&path, state.brush_color)
+    let (geometry, vertices) = if app.is_outline {
+        LyonOpsFill::new(&path, app.brush_color)
     } else {
-        LyonOpsLine::new(&path, state.brush_color, state.brush_size)
+        LyonOpsLine::new(&path, app.brush_color, app.brush_size)
     };
 
     let mesh = Mesh {
@@ -90,6 +79,6 @@ fn circle_mesh(state: &mut App) {
         texture: None,
     };
 
-    let last = state.lines.len() - 1;
-    state.lines[last].push(mesh);
+    let last = app.lines.len() - 1;
+    app.lines[last].push(mesh);
 }
