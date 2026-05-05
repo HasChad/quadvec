@@ -30,8 +30,12 @@ async fn main() {
         app.inputs();
 
         // ! draw
-        clear_background(app.bg_color);
         set_camera(&freedom_camera.camera);
+        clear_background(app.bg_color);
+
+        if app.draw_settings.enable_grid {
+            draw_grid(freedom_camera.camera.target);
+        }
 
         ui.render_ui(&mut app);
 
@@ -49,5 +53,24 @@ async fn main() {
         egui_macroquad::draw();
 
         next_frame().await
+    }
+}
+
+const CELL_SIZE: i32 = 50;
+const LINE_COUNT: i32 = 300;
+
+fn draw_grid(center: Vec2) {
+    let grid_size = (LINE_COUNT * CELL_SIZE) as f32;
+
+    let offset_x = center.x - grid_size / 2.0;
+    let offset_y = center.y - grid_size / 2.0;
+
+    for i in 0..=LINE_COUNT {
+        let x = offset_x + (i * CELL_SIZE) as f32 - center.x % CELL_SIZE as f32;
+        let y = offset_y + (i * CELL_SIZE) as f32 - center.y % CELL_SIZE as f32;
+        // vertical lines
+        draw_line(x, offset_y, x, offset_y + grid_size, 1.0, DARKGRAY);
+        // horizontal lines
+        draw_line(offset_x, y, offset_x + grid_size, y, 1.0, DARKGRAY);
     }
 }

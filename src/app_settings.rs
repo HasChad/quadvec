@@ -90,7 +90,7 @@ impl FreedomCamera2D {
             }
         }
 
-        if is_mouse_button_down(MouseButton::Middle) {
+        if is_mouse_button_down(MouseButton::Right) {
             let mouse_pos = mouse_delta_position();
 
             self.camera.target.x += mouse_pos.x * screen_width() / self.zoom;

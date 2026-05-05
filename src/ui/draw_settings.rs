@@ -5,6 +5,7 @@ use crate::drawing::{App, DrawStyle};
 pub struct DrawSettings {
     pub sides: u32,
     pub rotation: f32,
+    pub enable_grid: bool,
 }
 
 impl DrawSettings {
@@ -12,6 +13,7 @@ impl DrawSettings {
         Self {
             sides: 6,
             rotation: 0.0,
+            enable_grid: true,
         }
     }
 
@@ -92,7 +94,6 @@ impl DrawSettings {
 
                         // POLYGON SETTINGS
                         if app.style == DrawStyle::Poly {
-                            // ui.heading("- Polygon Settings -");
                             ui.end_row();
 
                             ui.label(RichText::new("Edge Count:").color(Color32::WHITE));
@@ -112,11 +113,14 @@ impl DrawSettings {
                             ui.end_row();
                         }
 
-                        // Outline Toggle
+                        // Clear Canvas
                         ui.end_row();
                         if ui.button("Clear Canvas").clicked() {
                             app.clear_canvas();
                         }
+
+                        // Grid Toggle
+                        ui.checkbox(&mut app.draw_settings.enable_grid, "Grid");
                         ui.end_row();
 
                         // ui.label(

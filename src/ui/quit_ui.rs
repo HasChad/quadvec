@@ -22,6 +22,7 @@ impl QuitUI {
             .max_width(50.0)
             .max_height(25.0)
             .anchor(Align2::CENTER_CENTER, (0.0, 0.0))
+            .frame(egui::Frame::window(&ctx.style()).shadow(egui::Shadow::NONE))
             .show(ctx, |ui| {
                 ui.centered_and_justified(|ui| {
                     let text = RichText::new("Quit?").color(Color32::WHITE);
