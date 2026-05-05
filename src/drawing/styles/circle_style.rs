@@ -7,6 +7,7 @@ use crate::drawing::{App, lyon_ops::*};
 pub fn circle_draw(mouse_pos: Vec2, app: &mut App) {
     if is_mouse_button_pressed(MouseButton::Left) {
         app.current_line.push(mouse_pos);
+        app.current_line.push(mouse_pos);
     };
 
     if is_mouse_button_down(MouseButton::Left) && !app.current_line.is_empty() {

@@ -21,15 +21,15 @@ impl UI {
         }
     }
 
-    pub fn render_ui(self: &mut Self, draw_state: &mut App) {
+    pub fn render_ui(self: &mut Self, app: &mut App) {
         egui_macroquad::ui(|ctx| {
-            draw_state.can_draw = !ctx.wants_pointer_input();
+            app.can_draw = !ctx.wants_pointer_input();
 
             if is_key_pressed(KeyCode::Escape) {
                 self.quit_ui.visible = true;
             }
 
-            self.draw_settings.ui(ctx, draw_state);
+            self.draw_settings.ui(ctx, app);
             self.quit_ui.ui(ctx);
         })
     }

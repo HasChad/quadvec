@@ -12,6 +12,7 @@ pub fn curve_draw(mouse_pos: Vec2, app: &mut App) {
             app.current_line.clear();
         } else {
             app.current_line.push(mouse_pos);
+            app.current_line.push(mouse_pos);
         }
     };
 
@@ -24,11 +25,12 @@ pub fn curve_draw(mouse_pos: Vec2, app: &mut App) {
     if is_mouse_button_released(MouseButton::Left) {
         if app.current_line.len() == 2 {
             app.current_line[1] = mouse_pos;
+            app.current_line.push(mouse_pos);
         }
     }
 
     if app.current_line.len() == 3 {
-        app.current_line[1] = mouse_pos;
+        app.current_line[2] = mouse_pos;
     }
 }
 

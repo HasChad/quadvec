@@ -87,7 +87,7 @@ impl App {
         }
     }
 
-    fn clear_canvas(self: &mut Self) {
+    pub fn clear_canvas(self: &mut Self) {
         self.lines.clear();
         self.redo_save.clear();
     }
